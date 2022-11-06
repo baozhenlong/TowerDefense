@@ -4,7 +4,7 @@ public class EnemyMovement : MonoBehaviour
 {
     private Transform targetPointTransform;
 
-    private int pointIndex;
+    private int pointIndex = 0;
 
     private Vector3 dir;
     private Enemy enemy;
@@ -17,7 +17,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        pointIndex = 0;
         targetPointTransform = WayPoints.points[pointIndex];
     }
 
