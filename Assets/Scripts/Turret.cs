@@ -70,7 +70,7 @@ public class Turret : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Shoot");
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation).GetComponent<Bullet>().Seek(targetTransform);
     }
 
     private void LockOnTarget()
