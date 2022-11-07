@@ -12,4 +12,13 @@ public class Enemy : MonoBehaviour
         speed = startSpeed;
     }
 
+    public void TakeDamage()
+    {
+        Die();
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }
