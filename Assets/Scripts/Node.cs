@@ -79,7 +79,7 @@ public class Node : MonoBehaviour
 
         turretBlueprint = _turretBlueprint;
         GameObject buildEffect = Instantiate(buildManager.buildEffectPrefab, BuildPosition, Quaternion.identity);
-        Destroy(buildEffect, buildEffect.GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
+        Destroy(buildEffect, buildEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
         turret = Instantiate(turretBlueprint.prefab, BuildPosition, Quaternion.identity);
         Debug.Log("turret build!");
     }
