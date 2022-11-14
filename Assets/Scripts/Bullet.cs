@@ -3,6 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float speed = 70f;
+    public float damage = 50f;
     public float explosionRadius = 0f;
     public GameObject impactEffectPrefab;
     private Transform targetTransform;
@@ -49,7 +50,7 @@ public class Bullet : MonoBehaviour
 
     private void Damage(Transform enemyTransform)
     {
-        enemyTransform.GetComponent<Enemy>().TakeDamage();
+        enemyTransform.GetComponent<Enemy>().TakeDamage(damage);
     }
 
     private void Explode()
