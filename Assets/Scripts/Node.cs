@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class Node : MonoBehaviour
 {
     public Color hoverColor;
+    public Color notEnoughCurrencyColor;
     private GameObject turret;
     private TurretBlueprint turretBlueprint;
     private Renderer rendererComp;
@@ -25,11 +26,22 @@ public class Node : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         if (!buildManager.CanBuild)
         {
             return;
         }
-        rendererComp.material.color = hoverColor;
+        if (buildManager.HasCurrency)
+        {
+            rendererComp.material.color = hoverColor;
+        }
+        else
+        {
+            rendererComp.material.color = notEnoughCurrencyColor;
+        }
     }
 
     private void OnMouseExit()
@@ -57,7 +69,17 @@ public class Node : MonoBehaviour
 
     private void BuildTurret(TurretBlueprint _turretBlueprint)
     {
+        if (PlayerStats.Currency < _turretBlueprint.cost)
+        {
+            Debug.Log("Not enough money to build!");
+            return;
+        }
+
+        PlayerStats.Currency -= _turretBlueprint.cost;
+
         turretBlueprint = _turretBlueprint;
+        GameObject buildEffect = Instantiate(buildManager.buildEffectPrefab, BuildPosition, Quaternion.identity);
+        Destroy(buildEffect, buildEffect.GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
         turret = Instantiate(turretBlueprint.prefab, BuildPosition, Quaternion.identity);
         Debug.Log("turret build!");
     }
