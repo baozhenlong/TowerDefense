@@ -11,13 +11,24 @@ public class WaveSpawner : MonoBehaviour
     public TextMeshProUGUI countdownText;
     private int waveIndex = 0;
     private Wave wave;
+    public GameManager gameManager;
+    public static int AliveEnemies { set; get; }
+
+    private void Start()
+    {
+        AliveEnemies = 0;
+    }
 
     private void Update()
     {
+        if (AliveEnemies > 0)
+        {
+            return;
+        }
 
         if (waveIndex == waves.Length)
         {
-            Debug.Log("波次生成结束");
+            gameManager.WinLevel();
             this.enabled = false;
         }
 
@@ -40,6 +51,7 @@ public class WaveSpawner : MonoBehaviour
     private IEnumerator SpawnWave()
     {
         wave = waves[waveIndex];
+        AliveEnemies = wave.count;
         for (int i = 0; i < wave.count; i++)
         {
             SpawnEnemy(wave.enemy);

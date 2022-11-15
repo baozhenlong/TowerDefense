@@ -32,5 +32,6 @@ public class Enemy : MonoBehaviour
         GameObject deathEffect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         Destroy(deathEffect, deathEffect.GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
         Destroy(gameObject);
+        WaveSpawner.AliveEnemies -= 1;
     }
 }

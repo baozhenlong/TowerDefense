@@ -43,6 +43,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void ReachTheEnd()
     {
+        PlayerStats.Lives -= 1;
+        WaveSpawner.AliveEnemies -= 1;
         Destroy(gameObject);
     }
 }
