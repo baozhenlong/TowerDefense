@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
 {
     public float startSpeed = 10f;
     public float startHealth = 100f;
+    public int worth = 50;
     public GameObject deathEffectPrefab;
     [HideInInspector]
     public float speed;
@@ -29,6 +30,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        PlayerStats.Currency += worth;
         GameObject deathEffect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         Destroy(deathEffect, deathEffect.GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
         Destroy(gameObject);
