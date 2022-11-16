@@ -3,12 +3,23 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     private Transform targetTransform;
+    private Enemy targetComp;
 
     [Header("General")]
     public float range = 15f;
+    [Header("Use Bullets(Default)")]
     public GameObject bulletPrefab;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
+
+    [Header("Use Laser")]
+    public bool useLaser = false;
+    public float damagePerSecond = 20f;
+    public float slowValue = .5f;
+    public LineRenderer lineRenderer;
+    public ParticleSystem[] impactParticleSystems;
+    public Light impactLight;
+    private Vector3 laserDir;
 
     [Header("Unity Setup")]
     public string enemyTag = "Enemy";
@@ -46,6 +57,7 @@ public class Turret : MonoBehaviour
         if (nearestEnemy != null && shortestDistanceToEnemy <= range)
         {
             targetTransform = nearestEnemy.transform;
+            targetComp = targetTransform.GetComponent<Enemy>();
         }
         else
         {
@@ -57,15 +69,52 @@ public class Turret : MonoBehaviour
     {
         if (targetTransform == null)
         {
+            if (useLaser && lineRenderer.enabled)
+            {
+                lineRenderer.enabled = false;
+                foreach (var impactParticleSystem in impactParticleSystems)
+                {
+                    impactParticleSystem.Stop();
+                }
+                impactLight.enabled = false;
+            }
             return;
         }
         LockOnTarget();
-        if (fireCountdown <= 0f)
+        if (useLaser)
         {
-            Shoot();
-            fireCountdown = 1f / fireRate;
+            Laser();
         }
-        fireCountdown -= Time.deltaTime;
+        else
+        {
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = 1f / fireRate;
+            }
+            fireCountdown -= Time.deltaTime;
+        }
+    }
+
+    private void Laser()
+    {
+        targetComp.TakeDamage(damagePerSecond * Time.deltaTime);
+        targetComp.Slow(slowValue);
+        if (!lineRenderer.enabled)
+        {
+            lineRenderer.enabled = true;
+            foreach (var impactParticleSystem in impactParticleSystems)
+            {
+                impactParticleSystem.Play();
+            }
+            impactLight.enabled = true;
+        }
+        lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, targetTransform.position);
+        // 效果在敌人身后
+        laserDir = firePoint.position - targetTransform.position;
+        impactParticleSystems[0].transform.position = targetTransform.position + laserDir.normalized;
+        impactParticleSystems[0].transform.rotation = Quaternion.LookRotation(laserDir);
     }
 
     private void Shoot()

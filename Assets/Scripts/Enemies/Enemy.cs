@@ -36,4 +36,9 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
         WaveSpawner.AliveEnemies -= 1;
     }
+
+    public void Slow(float value)
+    {
+        speed = startSpeed * (1 - value);
+    }
 }

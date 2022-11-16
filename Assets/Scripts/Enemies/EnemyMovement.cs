@@ -28,6 +28,7 @@ public class EnemyMovement : MonoBehaviour
         {
             UpdateNextPoint();
         }
+        enemy.speed = enemy.startSpeed;
     }
 
     private void UpdateNextPoint()
