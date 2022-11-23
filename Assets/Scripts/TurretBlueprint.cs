@@ -7,4 +7,7 @@ public class TurretBlueprint
     public Vector3 positionOffset;
 
     public int cost;
+    public GameObject upgradedPrefab;
+    public int upgradedCost;
+    public int Worth { get { return cost / 2; } }
 }

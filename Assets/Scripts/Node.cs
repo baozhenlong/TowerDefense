@@ -6,7 +6,10 @@ public class Node : MonoBehaviour
     public Color hoverColor;
     public Color notEnoughCurrencyColor;
     private GameObject turret;
-    private TurretBlueprint turretBlueprint;
+    [HideInInspector]
+    public TurretBlueprint turretBlueprint;
+    [HideInInspector]
+    public bool isUpgraded = false;
     private Renderer rendererComp;
     private Color startColor;
 
@@ -57,7 +60,7 @@ public class Node : MonoBehaviour
         }
         if (turret != null)
         {
-            Debug.Log("Already has turret");
+            buildManager.SelectNode(this);
             return;
         }
         if (!buildManager.CanBuild)
@@ -82,5 +85,31 @@ public class Node : MonoBehaviour
         Destroy(buildEffect, buildEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
         turret = Instantiate(turretBlueprint.prefab, BuildPosition, Quaternion.identity);
         Debug.Log("turret build!");
+    }
+
+    public void UpgradeTurret()
+    {
+        if (PlayerStats.Currency < turretBlueprint.upgradedCost)
+        {
+            Debug.Log("Not enough money to upgrade");
+            return;
+        }
+        isUpgraded = true;
+        PlayerStats.Currency -= turretBlueprint.upgradedCost;
+        Destroy(turret);
+        GameObject buildEffect = Instantiate(buildManager.buildEffectPrefab, BuildPosition, Quaternion.identity);
+        Destroy(buildEffect, buildEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
+        turret = Instantiate(turretBlueprint.upgradedPrefab, BuildPosition, Quaternion.identity);
+        Debug.Log("turret upgraded!");
+    }
+
+    public void SellTurret()
+    {
+        PlayerStats.Currency += turretBlueprint.Worth;
+        GameObject sellEffect = Instantiate(buildManager.sellEffectPrefab, BuildPosition, Quaternion.identity);
+        Destroy(sellEffect, sellEffect.transform.GetChild(0).GetComponent<ParticleSystem>().main.startLifetime.constant + 3f);
+        Destroy(turret);
+        turret = null;
+        turretBlueprint = null;
     }
 }
