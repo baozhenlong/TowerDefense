@@ -21,6 +21,11 @@ public class WaveSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.isGameOver)
+        {
+            this.enabled = false;
+            return;
+        }
         if (AliveEnemies > 0)
         {
             return;

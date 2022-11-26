@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static bool isGameOver;
+    public GameObject gameOverUI;
 
     private void Start()
     {
@@ -24,12 +25,13 @@ public class GameManager : MonoBehaviour
     private void Lose()
     {
         isGameOver = true;
-        Debug.Log("游戏结束-lose");
+        gameOverUI.SetActive(true);
     }
 
     public void WinLevel()
     {
         isGameOver = true;
+        gameOverUI.SetActive(true);
         Debug.Log("游戏结束-win");
     }
 }
