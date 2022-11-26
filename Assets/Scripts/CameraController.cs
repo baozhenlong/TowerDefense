@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     {
         if (GameManager.isGameOver)
         {
+            this.enabled = false;
             return;
         }
         if (Input.GetKeyDown(KeyCode.Space))
