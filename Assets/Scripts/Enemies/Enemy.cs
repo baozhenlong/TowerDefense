@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
 {
@@ -12,15 +12,20 @@ public class Enemy : MonoBehaviour
     private float health;
     private bool isDead = false;
 
+    [Header("Unity Stuff")]
+    public Image healthBarImg;
+
     private void Start()
     {
         speed = startSpeed;
         health = startHealth;
+        healthBarImg.fillAmount = 1;
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBarImg.fillAmount = health / startHealth;
         if (health <= 0 && !isDead)
         {
             Die();
