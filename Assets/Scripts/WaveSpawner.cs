@@ -55,6 +55,7 @@ public class WaveSpawner : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
+        PlayerStats.rounds += 1;
         wave = waves[waveIndex];
         AliveEnemies = wave.count;
         for (int i = 0; i < wave.count; i++)

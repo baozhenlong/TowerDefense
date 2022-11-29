@@ -4,6 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static bool isGameOver;
     public GameObject gameOverUI;
+    public GameObject winLevelUI;
 
     private void Start()
     {
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviour
     public void WinLevel()
     {
         isGameOver = true;
-        gameOverUI.SetActive(true);
-        Debug.Log("游戏结束-win");
+        winLevelUI.SetActive(true);
     }
 }
