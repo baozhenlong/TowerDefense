@@ -6449,20 +6449,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemy: {fileID: 140049288324616924, guid: 2035a83258bdfe8438261223087f6cab, type: 3}
-    count: 1
-    rate: 2
-  - enemy: {fileID: 140049288324616924, guid: 2035a83258bdfe8438261223087f6cab, type: 3}
-    count: 2
-    rate: 2
-  - enemy: {fileID: 140049288324616924, guid: 2035a83258bdfe8438261223087f6cab, type: 3}
     count: 5
     rate: 2
-  - enemy: {fileID: 140049288324616924, guid: a78ae0134b10c374f9fda9d95c28d9a5, type: 3}
-    count: 3
-    rate: 1
-  - enemy: {fileID: 140049288324616924, guid: 9b9907d7209246847bda88459034a75a, type: 3}
+  - enemy: {fileID: 140049288324616924, guid: 2035a83258bdfe8438261223087f6cab, type: 3}
     count: 10
+    rate: 2
+  - enemy: {fileID: 140049288324616924, guid: a78ae0134b10c374f9fda9d95c28d9a5, type: 3}
+    count: 20
     rate: 3
+  - enemy: {fileID: 140049288324616924, guid: a78ae0134b10c374f9fda9d95c28d9a5, type: 3}
+    count: 40
+    rate: 2
+  - enemy: {fileID: 140049288324616924, guid: 9b9907d7209246847bda88459034a75a, type: 3}
+    count: 50
+    rate: 4
   spawnPointTransform: {fileID: 1429486497}
   betweenWavesTime: 2
   countdownText: {fileID: 449027990}
